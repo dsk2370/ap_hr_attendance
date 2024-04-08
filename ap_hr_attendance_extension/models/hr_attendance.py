@@ -25,30 +25,26 @@ class HrEmployeeInh(models.Model):
         }
 
     @api.model
-    def get_tasks(self,project_id):
-        project_id = self.env['project.project'].search([('id','=',project_id)])
-        all_tasks = project_id.mapped('task_ids')
+    def get_tasks(self, project_id):
+        project = self.env['project.project'].browse(project_id)
+        all_tasks = project.task_ids
         return {
-            'task_ids': [{'id':task.id, 'name':task.display_name, 'project_id':task.project_id.id} for task in all_tasks],
+            'task_ids': [{'id': task.id, 'name': task.display_name, 'project_id': task.project_id.id} for task in all_tasks],
         }
     
     # Inherited _attendance_action_change function to update new project_id, task_id and description field
     def _attendance_action_change(self):
         res = super(HrEmployeeInh, self)._attendance_action_change()
         if self.attendance_state == 'checked_in':
-            project_id = self.env.context.get('project_id', False)
-            task_id = self.env.context.get('task_id', False)
-            current_project = self.env.context.get('current_project', False)
-            current_task = self.env.context.get('current_task', False)
-            description = self.env.context.get('description', False)
+            context = self.env.context
             val = {
-                'project_id': int(project_id) if project_id else False, 
-                'task_id': int(task_id) if task_id else False,
-                'description': str(description) if description else False
+                'project_id': context.get('project_id') or False, 
+                'task_id': context.get('task_id') or False,
+                'description': context.get('description') or False
             }
-            self.current_project = str(current_project) if current_project else False
-            self.current_task = str(current_task) if current_task else False
-            self.current_description = str(description) if description else False
+            self.current_project = context.get('current_project') or False
+            self.current_task = context.get('current_task') or False
+            self.current_description = context.get('description') or False
 
             res.update(val)
         return res

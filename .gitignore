@@ -1,0 +1,31 @@
+# Byte-compiled / optimized Python files
+*.pyc
+__pycache__/
+
+# Editor-specific files
+.vscode/
+*.swp
+*~
+
+# Database and log files
+*.sql
+*.log
+
+# Compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Local Odoo development files
+*.bak
+*.orig
+*.sqlite
+
+# Directory for storing Odoo data filestore
+filestore/
+
+# Directory for storing Odoo backups
+filestore_backup/
+
+# IDE configuration files
+.idea/

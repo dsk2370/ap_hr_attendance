@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- add custom fields to tree view of attendance -->
+    <record id="ap_view_attendance_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.tree.project</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- add custom fields to form view of attendance --> 
+    <record id="ap_hr_attendance_view_form" model="ir.ui.view">
+        <field name="name">hr.attendance.form.project</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="description"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- add custom filter to search view of attendance --> 
+    <record id="ap_hr_attendance_view_filter" model="ir.ui.view">
+        <field name="name">hr.attendance.view.filter.project</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="description"/>
+                <filter string="Project" name="groupby_project" context="{'group_by': 'project_id'}"/>
+                <filter string="Task" name="groupby_task" context="{'group_by': 'task_id'}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
